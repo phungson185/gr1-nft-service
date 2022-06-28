@@ -5,17 +5,17 @@ import { bufferToHex } from 'ethereumjs-utils';
 import { recoverPersonalSignature } from 'eth-sig-util';
 import { JwtService } from '@nestjs/jwt';
 
-import { Users, UserDocument } from '../../domain/schemas';
+import { User, UserDocument } from '../../domain/schemas';
 import { GetTokenDto } from './dtos';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(Users.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private jwtService: JwtService,
   ) {}
 
-  async getUserByAddress(address: string): Promise<Users> {
+  async getUserByAddress(address: string): Promise<User> {
     const user = await this.userModel.findOne({ address }).exec();
     if (user) {
       return user;

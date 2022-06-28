@@ -1,0 +1,60 @@
+import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { InjectModel } from '@nestjs/mongoose';
+import { FilterQuery, Model } from 'mongoose';
+import { BaseResultPagination, PaginationDto } from '../../../domain/dtos';
+import { NftItemDocument, NftItems } from '../../../domain/schemas';
+import { GetNftItemsDto, NftItemDto } from '../dtos';
+
+export class GetNftItems implements IQuery {
+  constructor(public payload: GetNftItemsDto) {}
+}
+
+@QueryHandler(GetNftItems)
+export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
+  constructor(
+    @InjectModel(NftItems.name)
+    private readonly nftItemModel: Model<NftItemDocument>,
+  ) {}
+
+  async execute(param: GetNftItems): Promise<BaseResultPagination<NftItemDto>> {
+    const result = new BaseResultPagination<NftItemDto>();
+    const {
+      search,
+      owner,
+      page,
+      size,
+      orderBy,
+      desc,
+    }: GetNftItemsDto = param.payload;
+    const skipIndex = size * (page - 1);
+    const queryNft: FilterQuery<NftItemDocument> = {};
+
+    //Search
+    if (search) {
+      queryNft.name = new RegExp(search, 'i');
+    }
+    if (owner) {
+      queryNft.ownerAddress = { $eq: owner.toLowerCase() };
+    }
+    const total = await this.nftItemModel.countDocuments(queryNft);
+
+    const nftMarketItems = await this.nftItemModel
+      .find(queryNft)
+      .skip(skipIndex)
+      .limit(size)
+      .exec();
+
+    // const autoNftItems = deserializeArray(
+    //   NftItems,
+    //   JSON.stringify(nftMarketItems),
+    // );
+    // const items = await this.mapper.mapArrayAsync(
+    //   autoNftItems,
+    //   NftItemDto,
+    //   NftItems,
+    // );
+
+    result.data = new PaginationDto<any>(nftMarketItems, total, page, size);
+    return result;
+  }
+}

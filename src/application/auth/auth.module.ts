@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { appConfiguration, AppConfiguration } from '../../config/configuration';
-import { Users, UserSchema } from '../../domain/schemas';
+import { User, UserSchema } from '../../domain/schemas';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { Users, UserSchema } from '../../domain/schemas';
       inject: [appConfiguration.KEY],
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    MongooseModule.forFeature([{ name: Users.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
