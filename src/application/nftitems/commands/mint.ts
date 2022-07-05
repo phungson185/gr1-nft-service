@@ -22,7 +22,7 @@ export class MintHandler implements ICommandHandler<Mint> {
   async execute(command: Mint): Promise<BaseResult<any>> {
     const result = new BaseResult<any>();
     try {
-      if (!this.web3Service.isValidAddress(command.payload.creatorAddress)) {
+      if (!this.web3Service.isValidAddress(command.payload.creator.address)) {
         throw new BadRequestException('address is not valid');
       }
 

@@ -1,6 +1,8 @@
 import { AutoMap } from '@automapper/classes';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { BasicUser } from '../schemas/basicuser';
+
 
 export type NftItemDocument = NftItems & Document;
 
@@ -35,7 +37,11 @@ export class NftItems {
 
   @AutoMap()
   @Prop()
-  creatorAddress: string;
+  creator: BasicUser;
+
+  @AutoMap()
+  @Prop()
+  owner: BasicUser;
 
   @AutoMap()
   @Prop()
@@ -44,9 +50,5 @@ export class NftItems {
   @AutoMap()
   @Prop()
   transactionHash: string;
-
-  @AutoMap()
-  @Prop()
-  block: string;
 }
 export const NftItemSchema = SchemaFactory.createForClass(NftItems);

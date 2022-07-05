@@ -1,5 +1,6 @@
 import { AutoMap } from '@automapper/classes';
 import { ApiProperty } from '@nestjs/swagger';
+import { BasicUser } from 'src/domain/schemas/basicuser';
 import { BaseDocumentDto } from '../../../domain/dtos';
 
 export class NftItemDto extends BaseDocumentDto {
@@ -21,7 +22,11 @@ export class NftItemDto extends BaseDocumentDto {
 
   @AutoMap()
   @ApiProperty()
-  creatorAddress: string;
+  creator: string;
+
+  @AutoMap()
+  @ApiProperty()
+  owner: BasicUser;
 
   @AutoMap()
   @ApiProperty()
