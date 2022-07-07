@@ -29,7 +29,6 @@ export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
     const skipIndex = size * (page - 1);
     const queryNft: FilterQuery<NftItemDocument> = {};
 
-    //Search
     if (search) {
       queryNft.name = new RegExp(search, 'i');
     }
@@ -43,16 +42,6 @@ export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
       .skip(skipIndex)
       .limit(size)
       .exec();
-
-    // const autoNftItems = deserializeArray(
-    //   NftItems,
-    //   JSON.stringify(nftMarketItems),
-    // );
-    // const items = await this.mapper.mapArrayAsync(
-    //   autoNftItems,
-    //   NftItemDto,
-    //   NftItems,
-    // );
 
     result.data = new PaginationDto<any>(nftMarketItems, total, page, size);
     return result;
