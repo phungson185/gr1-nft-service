@@ -24,7 +24,7 @@ import { CreateCommentDto } from './dtos';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateComment } from './commands/create.comment';
 
-@Controller('comments')
+@Controller('comment')
 @ApiTags('CommentEndpoints')
 @ApiExtraModels(BaseResultPagination, BaseResult)
 export class NftItemController {

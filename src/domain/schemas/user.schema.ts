@@ -22,7 +22,7 @@ export class User {
   address: string;
 
   @AutoMap()
-  @Prop({ required: true })
+  @Prop()
   username: string;
 
   @AutoMap()
@@ -32,6 +32,10 @@ export class User {
   @AutoMap()
   @Prop()
   cover: string;
+
+  @AutoMap()
+  @Prop()
+  bio: string;
 
   @AutoMap()
   @Prop()
