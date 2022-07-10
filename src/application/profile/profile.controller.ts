@@ -75,6 +75,4 @@ export class ProfileController {
     const user = await this.profileService.updateProfileByAddress(updateInfo);
     return { success: true, errors: [], data: user };
   }
-
-
 }

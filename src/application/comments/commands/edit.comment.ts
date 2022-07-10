@@ -6,14 +6,14 @@ import { Comment, CommentDocument } from 'src/domain/schemas/comment.schema';
 import { BaseResult } from '../../../domain/dtos';
 import { NftItemDocument, NftItems } from '../../../domain/schemas';
 import { Web3Service } from '../../web3/web3.service';
-import { CreateCommentDto } from '../dtos';
+import { EditCommentDto } from '../dtos/edit.comment.dto';
 
-export class CreateComment {
-  constructor(public itemId: string, public userId: string, public payload: CreateCommentDto) {}
+export class EditComment {
+  constructor(public id: string, public payload: EditCommentDto) {}
 }
 
-@CommandHandler(CreateComment)
-export class CreateCommentHandler implements ICommandHandler<CreateComment> {
+@CommandHandler(EditComment)
+export class EditCommentHandler implements ICommandHandler<EditComment> {
   constructor(
     @InjectModel(NftItems.name)
     private readonly nftItemModel: Model<NftItemDocument>,
@@ -22,25 +22,18 @@ export class CreateCommentHandler implements ICommandHandler<CreateComment> {
     private readonly web3Service: Web3Service,
   ) {}
 
-  async execute(command: CreateComment): Promise<BaseResult<any>> {
+  async execute(command: EditComment): Promise<BaseResult<any>> {
     const result = new BaseResult<any>();
-    const { username, content, avatar } = command.payload;
+    const { content } = command.payload;
     try {
-      const item = await this.nftItemModel.findById(command.itemId);
-      if (!item) {
-        throw new BadRequestException('item not found');
+      const comment = await this.commentModel.findById(command.id);
+      if (!comment) {
+        throw new BadRequestException('comment not found');
       }
+      comment.content = content;
+      await comment.save();
 
-      const newComment = new this.commentModel({
-        username,
-        content,
-        avatar,
-        itemId: command.itemId,
-        userId: command.userId,
-      });
-
-      await newComment.save();
-      result.data = newComment;
+      result.data = comment;
       return result;
     } catch (error) {
       throw new BadRequestException(error);

@@ -1,28 +1,36 @@
-import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import {
+  Body,
   Controller,
   Get,
-  Res,
-  Post,
   HttpStatus,
-  Query,
   Logger,
   Param,
-  Body,
+  Post,
+  Put,
+  Query,
+  Request,
+  Res,
   UseGuards,
-  Req,
 } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
-  ApiTags,
+  ApiBearerAuth,
   ApiExtraModels,
   ApiOkResponse,
+  ApiTags,
   getSchemaPath,
-  ApiBearerAuth,
 } from '@nestjs/swagger';
-import { BaseResultPagination, BaseResult } from '../../domain/dtos';
-import { CreateCommentDto } from './dtos';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import {
+  BaseQueryParams,
+  BaseResult,
+  BaseResultPagination,
+} from '../../domain/dtos';
 import { CreateComment } from './commands/create.comment';
+import { EditComment } from './commands/edit.comment';
+import { CreateCommentDto } from './dtos';
+import { EditCommentDto } from './dtos/edit.comment.dto';
+import { GetComments } from './queries/get.comments';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('comment')
 @ApiTags('CommentEndpoints')
@@ -31,9 +39,10 @@ export class NftItemController {
   private readonly logger = new Logger(NftItemController.name);
   constructor(
     private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
   ) {}
 
-  @Post('')
+  @Get('/item/:itemId')
   @ApiOkResponse({
     schema: {
       allOf: [
@@ -46,8 +55,63 @@ export class NftItemController {
       ],
     },
   })
-  public async CreateComment(@Res() res, @Body() body: CreateCommentDto) {
-    const result = await this.commandBus.execute(new CreateComment(body));
+  public async GetComment(
+    @Res() res,
+    @Param('itemId') itemId: string,
+    @Query() query: BaseQueryParams,
+  ) {
+    const result = await this.queryBus.execute(
+      new GetComments(itemId, query),
+    );
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT')
+  @Post('/item/:itemId')
+  @ApiOkResponse({
+    schema: {
+      allOf: [
+        { $ref: getSchemaPath(BaseResult) },
+        {
+          properties: {
+            data: { type: 'any' },
+          },
+        },
+      ],
+    },
+  })
+  public async CreateComment(
+    @Res() res,
+    @Param('itemId') itemId: string,
+    @Body() body: CreateCommentDto,
+    @Request() req: any,
+  ) {
+    const result = await this.commandBus.execute(
+      new CreateComment(itemId, req?.user?._id, body),
+    );
+    return res.status(HttpStatus.OK).json(result);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({
+    schema: {
+      allOf: [
+        { $ref: getSchemaPath(BaseResult) },
+        {
+          properties: {
+            data: { type: 'any' },
+          },
+        },
+      ],
+    },
+  })
+  public async EditComment(
+    @Res() res,
+    @Param('id') id: string,
+    @Body() body: EditCommentDto,
+  ) {
+    const result = await this.commandBus.execute(new EditComment(id, body));
     return res.status(HttpStatus.OK).json(result);
   }
 }
