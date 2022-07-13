@@ -17,14 +17,14 @@ export class BaseQueryParams {
   @Max(25)
   size: number = 10;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ required: false, nullable: true, default: 'createdAt' })
   orderBy: string;
   
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty({ required: false, nullable: true, default: true })
   @Transform(({ value }) => {
     return [true, 'enabled', 'true'].indexOf(value) > -1;
   })
-  desc: boolean = false;
+  desc: boolean = true;
 
   // @Type(() => Number)
   // skipIndex = Number(this.size) * Number(this.page - 1);

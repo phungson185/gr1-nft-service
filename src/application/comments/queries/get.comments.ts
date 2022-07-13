@@ -22,7 +22,6 @@ export class GetCommentsHandler implements IQueryHandler<GetComments> {
   async execute(payload: GetComments): Promise<BaseResultPagination<any>> {
     const result = new BaseResult<any>();
     const { orderBy, desc }: BaseQueryParams = payload.param;
-
     const comments = await this.commentModel
       .find({ itemId: payload.itemId })
       .sort({
