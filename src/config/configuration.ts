@@ -5,7 +5,7 @@ import { v2 } from 'cloudinary';
 
 export const appConfiguration = registerAs('app', () => {
   return {
-    port: parseInt(process.env.NFT_PORT, 10) || 3000,
+    port: parseInt(process.env.PORT, 10) || 3001,
     baseUrl: process.env.BASE_URL_APIS || '',
     apiHeroEmpires: process.env.HERO_EMPIRES_BASE_URL,
     heroesEmpireTokenUrl: process.env.HERO_EMPIRES_GET_TOKEN_INFO_URL,
