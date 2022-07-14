@@ -35,4 +35,8 @@ export class MintDto extends BaseDocumentDto {
   @AutoMap()
   @ApiProperty()
   owner: BasicUser;
+
+  @AutoMap()
+  @ApiProperty()
+  ownerAddress: string;
 }

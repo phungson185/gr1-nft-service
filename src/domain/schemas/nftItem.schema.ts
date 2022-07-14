@@ -44,6 +44,10 @@ export class NftItems {
 
   @AutoMap()
   @Prop()
+  ownerAddress: string;
+
+  @AutoMap()
+  @Prop()
   image: string;
 
   @AutoMap()

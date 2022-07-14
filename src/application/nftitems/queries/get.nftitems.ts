@@ -33,7 +33,7 @@ export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
       queryNft.name = new RegExp(search, 'i');
     }
     if (owner) {
-      queryNft.owner.address = { $eq: owner.toLowerCase() };
+      queryNft.ownerAddress = { $eq: owner.toLowerCase() };
     }
     const total = await this.nftItemModel.countDocuments(queryNft);
 
