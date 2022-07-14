@@ -8,7 +8,7 @@ import { NftItems, NftItemSchema } from '../../domain/schemas';
 import {
   SystemConfig,
   SystemConfigSchema
-} from '../../domain/schemas/systemConfig.schema';
+} from '../../domain/schemas/systemconfig.schema';
 import { User, UserSchema } from '../../domain/schemas/user.schema';
 import { Web3Module } from '../web3/web3.module';
 import { NftItemController } from './nftitems.controller';
