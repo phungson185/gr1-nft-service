@@ -1,7 +1,7 @@
 import { AutoMap } from '@automapper/classes';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { BasicUser } from '../schemas/basicuser';
+import { BasicUser } from '../schemas/basicUser';
 
 export type NftItemDocument = NftItems & Document;
 

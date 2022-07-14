@@ -2,7 +2,7 @@ import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { BaseResultPagination, PaginationDto } from '../../../domain/dtos';
-import { NftItemDocument, NftItems } from '../../../domain/schemas';
+import { NftItemDocument, NftItems } from '../../../domain/schemas/nftItem.schema';
 import { GetNftItemsDto, NftItemDto } from '../dtos';
 
 export class GetNftItems implements IQuery {

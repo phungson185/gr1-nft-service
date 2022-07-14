@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Comment, CommentDocument } from 'src/domain/schemas/comment.schema';
 import { BaseResult } from '../../../domain/dtos';
-import { NftItemDocument, NftItems } from '../../../domain/schemas';
+import { NftItemDocument, NftItems } from '../../../domain/schemas/nftItem.schema';
 import { Web3Service } from '../../web3/web3.service';
 import { EditCommentDto } from '../dtos/edit.comment.dto';
 

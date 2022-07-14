@@ -3,7 +3,7 @@ import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { BaseResult } from '../../../domain/dtos';
-import { NftItems, NftItemDocument } from '../../../domain/schemas';
+import { NftItems, NftItemDocument } from '../../../domain/schemas/nftItem.schema';
 
 export class GetNftItem implements IQuery {
   constructor(public id: string) {}

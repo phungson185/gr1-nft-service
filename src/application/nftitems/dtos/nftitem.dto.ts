@@ -1,6 +1,6 @@
 import { AutoMap } from '@automapper/classes';
 import { ApiProperty } from '@nestjs/swagger';
-import { BasicUser } from 'src/domain/schemas/basicuser';
+import { BasicUser } from 'src/domain/schemas/basicUser';
 import { BaseDocumentDto } from '../../../domain/dtos';
 
 export class NftItemDto extends BaseDocumentDto {

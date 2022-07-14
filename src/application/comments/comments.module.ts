@@ -1,18 +1,16 @@
 import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CqrsModule, QueryHandler } from '@nestjs/cqrs';
-import { CommandHandlers } from './commands';
+import { Comment, CommentSchema } from 'src/domain/schemas/comment.schema';
+import { NftItems, NftItemSchema } from '../../domain/schemas';
 import {
-  NftItems,
-  NftItemSchema,
-  User,
-  UserSchema,
   SystemConfig,
   SystemConfigSchema,
-} from '../../domain/schemas';
-import { NftItemController } from './comments.controller';
+} from '../../domain/schemas/systemConfig.schema';
+import { User, UserSchema } from '../../domain/schemas/user.schema';
 import { Web3Module } from '../web3/web3.module';
-import { Comment, CommentSchema } from 'src/domain/schemas/comment.schema';
+import { CommandHandlers } from './commands';
+import { NftItemController } from './comments.controller';
 import { QueryHandlers } from './queries';
 
 @Module({

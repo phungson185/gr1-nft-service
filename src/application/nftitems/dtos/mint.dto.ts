@@ -1,7 +1,6 @@
 import { AutoMap } from '@automapper/classes';
 import { ApiProperty } from '@nestjs/swagger';
-import { Decimal128 } from 'mongoose';
-import { BasicUser } from 'src/domain/schemas/basicuser';
+import { BasicUser } from 'src/domain/schemas/basicUser';
 import { BaseDocumentDto } from '../../../domain/dtos';
 
 export class MintDto extends BaseDocumentDto {

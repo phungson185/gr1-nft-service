@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { BaseResult } from '../../../domain/dtos';
 import { MintDto } from '../dtos';
-import { NftItems, NftItemDocument } from '../../../domain/schemas';
+import { NftItems, NftItemDocument } from '../../../domain/schemas/nftItem.schema';
 import { Web3Service } from '../../web3/web3.service';
 
 export class Mint {
