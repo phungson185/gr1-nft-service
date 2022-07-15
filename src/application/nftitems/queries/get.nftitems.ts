@@ -39,6 +39,7 @@ export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
 
     const nftMarketItems = await this.nftItemModel
       .find(queryNft)
+      .sort({ [orderBy]: desc ? -1 : 1 })
       .skip(skipIndex)
       .limit(size)
       .exec();
