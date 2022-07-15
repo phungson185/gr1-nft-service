@@ -30,7 +30,10 @@ export class GetNftItemsHandler implements IQueryHandler<GetNftItems> {
     const queryNft: FilterQuery<NftItemDocument> = {};
 
     if (search) {
-      queryNft.name = new RegExp(search, 'i');
+      queryNft.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ];
     }
     if (owner) {
       queryNft.ownerAddress = { $eq: owner.toLowerCase() };
