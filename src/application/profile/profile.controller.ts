@@ -27,7 +27,8 @@ import { ProfileService } from './profile.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ConfigService } from '@nestjs/config';
 import { UpdateUserDto } from './dto';
-
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth('JWT')
 @Controller('profile')
 @ApiTags('Profile')
 @ApiExtraModels(User, BaseResult)

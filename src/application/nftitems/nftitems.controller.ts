@@ -25,7 +25,8 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Mint } from './commands/mint';
 import { GetNftItem } from './queries/get.nftItem';
 import { GetNftItems } from './queries/get.nftitems';
-
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth('JWT')
 @Controller('items')
 @ApiTags('NftItemEndpoints')
 @ApiExtraModels(BaseResultPagination, BaseResult)
