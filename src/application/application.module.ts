@@ -4,6 +4,7 @@ import { CommentModule } from './comments/comments.module';
 import { NftItemModule } from './nftitems/nftitems.module';
 import { ProfileModule } from './profile/profile.module';
 import { SystemModule } from './system/system.module';
+import { UserModule } from './user/user.module';
 @Module({
   imports: [
     CommentModule,
@@ -11,6 +12,7 @@ import { SystemModule } from './system/system.module';
     SystemModule,
     NftItemModule,
     ProfileModule,
+    UserModule,
   ],
 })
 export class ApplicationModule {}

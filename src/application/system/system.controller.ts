@@ -10,6 +10,7 @@ import {
   Delete,
   HttpStatus,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -17,6 +18,7 @@ import {
   ApiOkResponse,
   ApiCreatedResponse,
   getSchemaPath,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { SystemConfigDto } from './dtos';
 import { BaseResult } from '../../domain/dtos';
@@ -24,7 +26,10 @@ import { GetSystemConfig } from './queries/get.systemconfig';
 import { CreateSystemConfig } from './commands/create.systemconfig';
 import { UpdateSystemConfig } from './commands/update.systemconfig';
 import { DeleteSystemConfig } from './commands/delete.systemconfig';
+import { JwtAuthAdminGuard } from '../auth/jwt-authAdmin.guard';
 
+@UseGuards(JwtAuthAdminGuard)
+@ApiBearerAuth('JWT')
 @Controller('system')
 @ApiTags('SystemEndpoints')
 @ApiExtraModels(BaseResult, SystemConfigDto)

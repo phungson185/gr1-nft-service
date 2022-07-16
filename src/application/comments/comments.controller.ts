@@ -32,6 +32,8 @@ import { EditCommentDto } from './dtos/edit.comment.dto';
 import { GetComments } from './queries/get.comments';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth('JWT')
 @Controller('comment')
 @ApiTags('CommentEndpoints')
 @ApiExtraModels(BaseResultPagination, BaseResult)
@@ -66,8 +68,6 @@ export class NftItemController {
     return res.status(HttpStatus.OK).json(result);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('JWT')
   @Post('/item/:itemId')
   @ApiOkResponse({
     schema: {

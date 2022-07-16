@@ -40,6 +40,14 @@ export class User {
   @AutoMap()
   @Prop()
   nonce: number;
+
+  @AutoMap()
+  @Prop({ default: false })
+  isAdmin: boolean;
+
+  @AutoMap()
+  @Prop({ default: false })
+  deactivated: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
