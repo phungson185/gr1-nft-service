@@ -25,8 +25,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Mint } from './commands/mint';
 import { GetNftItem } from './queries/get.nftItem';
 import { GetNftItems } from './queries/get.nftitems';
-@UseGuards(JwtAuthGuard)
-@ApiBearerAuth('JWT')
+
 @Controller('items')
 @ApiTags('NftItemEndpoints')
 @ApiExtraModels(BaseResultPagination, BaseResult)
@@ -80,6 +79,8 @@ export class NftItemController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('JWT')
   @Post('mint')
   @ApiOkResponse({
     schema: {

@@ -9,7 +9,7 @@ import { UpdateUserDto } from '../dtos/update.user.dto';
 export class UpdateUser implements IQuery {
   constructor(
     public readonly id: string,
-    public readonly queries: UpdateUserDto,
+    public readonly body: UpdateUserDto,
   ) {}
 }
 
@@ -25,7 +25,7 @@ export class UpdateUserHandler implements IQueryHandler<UpdateUser> {
 
     const user = await this.userModel.findOneAndUpdate(
       { _id: param.id },
-      param.queries,
+      param.body,
       { new: true },
     );
 

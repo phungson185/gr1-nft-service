@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpStatus,
@@ -83,14 +84,14 @@ export class UserController {
       ],
     },
   })
-  public async AssginAdmin(
+  public async UpdateUser(
     @Res() res: Response,
     @Param('id') id: string,
-    @Query() queries: UpdateUserDto,
+    @Body() body: UpdateUserDto,
     @Next() next: NextFunction,
   ) {
     try {
-      const result = await this.commandBus.execute(new UpdateUser(id, queries));
+      const result = await this.commandBus.execute(new UpdateUser(id, body));
 
       return res.status(HttpStatus.OK).json(result);
     } catch (error) {
