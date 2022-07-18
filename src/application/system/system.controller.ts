@@ -87,7 +87,7 @@ export class SystemController {
         { $ref: getSchemaPath(BaseResult) },
         {
           properties: {
-            data: { type: 'boolean' },
+            data: { type: 'any' },
           },
         },
       ],

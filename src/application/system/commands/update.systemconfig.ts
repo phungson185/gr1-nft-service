@@ -12,32 +12,35 @@ export class UpdateSystemConfig {
 
 @CommandHandler(UpdateSystemConfig)
 export class UpdateSystemConfigHandler
-  implements ICommandHandler<UpdateSystemConfig> {
-    constructor(
-      @InjectModel(SystemConfig.name)
-      private readonly systemConfigModel: Model<SystemConfigDocument>
-    ) {}
+  implements ICommandHandler<UpdateSystemConfig>
+{
+  constructor(
+    @InjectModel(SystemConfig.name)
+    private readonly systemConfigModel: Model<SystemConfigDocument>,
+  ) {}
 
-    async execute(command: UpdateSystemConfig): Promise<BaseResult<boolean>> {
-      const result = new BaseResult<boolean>();
-      try {     
-        const systemConfig = await this.systemConfigModel.findOne({ _id: command.id });
-        if(!systemConfig) {
-          throw new BadRequestException(`"${command.id}", id is not exist`);     
-        }
-
-        const contract = command.payload.nftContractAddress;
-        const item = await this.systemConfigModel.findOne({ _id: { $ne: command.id }, nftContractAddress: contract });
-        if(item) {
-          throw new BadRequestException(`"${contract}", chainName is existed!`);   
-        } 
-
-        await this.systemConfigModel.findOneAndUpdate({ _id: command.id }, command.payload);
-        result.data = true;
-        return result;
+  async execute(command: UpdateSystemConfig): Promise<BaseResult<any>> {
+    const result = new BaseResult<any>();
+    try {
+      const systemConfig = await this.systemConfigModel.findOne({
+        _id: command.id,
+      });
+      if (!systemConfig) {
+        throw new BadRequestException(`"${command.id}", id is not exist`);
       }
-      catch(error) {
-        throw new NotFoundException('unown error');
+
+      const contract = command.payload.nftContractAddress;
+      if (!contract) {
+        throw new BadRequestException('nftContractAddress is required');
       }
+
+      systemConfig.nftContractAddress = contract;
+      await systemConfig.save();
+
+      result.data = systemConfig;
+      return result;
+    } catch (error) {
+      throw new NotFoundException('unown error');
     }
+  }
 }
