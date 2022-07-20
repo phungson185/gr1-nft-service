@@ -28,8 +28,6 @@ import { UpdateSystemConfig } from './commands/update.systemconfig';
 import { DeleteSystemConfig } from './commands/delete.systemconfig';
 import { JwtAuthAdminGuard } from '../auth/jwt-authAdmin.guard';
 
-@UseGuards(JwtAuthAdminGuard)
-@ApiBearerAuth('JWT')
 @Controller('system')
 @ApiTags('SystemEndpoints')
 @ApiExtraModels(BaseResult, SystemConfigDto)
@@ -39,6 +37,8 @@ export class SystemController {
     private readonly queryBus: QueryBus,
   ) {}
 
+  @UseGuards(JwtAuthAdminGuard)
+  @ApiBearerAuth('JWT')
   @Post()
   @ApiCreatedResponse({
     schema: {
@@ -80,6 +80,8 @@ export class SystemController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @UseGuards(JwtAuthAdminGuard)
+  @ApiBearerAuth('JWT')
   @Put(':id')
   @ApiOkResponse({
     schema: {
@@ -104,6 +106,8 @@ export class SystemController {
     return res.status(HttpStatus.OK).json(result);
   }
 
+  @UseGuards(JwtAuthAdminGuard)
+  @ApiBearerAuth('JWT')
   @Delete(':id')
   @ApiOkResponse({
     schema: {
